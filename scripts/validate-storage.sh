@@ -130,13 +130,17 @@ test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace ==
 test "$(yq eval-all '[select(.kind == "CiliumNetworkPolicy" and .metadata.name == "allow-database-kubernetes-api" and .metadata.namespace == "storage-verification") | .spec.egress[].toEntities[] | select(. == "kube-apiserver")] | length' \
   "${validation_dir}/cloudnative-pg-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "velero")] | length' \
-  "${validation_dir}/velero-first.yaml")" = 2
+  "${validation_dir}/velero-first.yaml")" = 3
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "velero" and .metadata.name == "allow-backup-operation") | .spec.egress[].ports[]? | select(.protocol == "TCP" and .port == 6443)] | length' \
+  "${validation_dir}/velero-first.yaml")" = 1
+test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "velero" and .metadata.name == "allow-monitoring-scrapes") | .spec.ingress[].ports[]? | select(.protocol == "TCP" and .port == 8085)] | length' \
   "${validation_dir}/velero-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "kube-system")] | length' \
   "${validation_dir}/snapshot-controller-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "longhorn-system")] | length' \
   "${validation_dir}/longhorn-first.yaml")" -ge 1
+test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "longhorn-system" and .metadata.name == "allow-monitoring-scrapes") | .spec.ingress[].ports[]? | select(.protocol == "TCP" and .port == 9500)] | length' \
+  "${validation_dir}/longhorn-first.yaml")" = 1
 
 for secret_file in "${repository_root}"/clusters/homelab/bootstrap/storage-secrets/*.sops.yaml; do
   test "$(sops filestatus "${secret_file}" | yq --input-format=json '.encrypted')" = true

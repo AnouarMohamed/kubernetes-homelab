@@ -154,10 +154,20 @@ test "$(yq eval-all --unwrapScalar 'select(.kind == "ConfigMap" and .metadata.na
   "${validation_dir}/trivy-first.yaml")" = "${TRIVY_CHECKS_BUNDLE}"
 test "$(yq eval-all --unwrapScalar 'select(.kind == "ConfigMap" and .metadata.name == "trivy-operator") | .data."node.collector.imageRef"' \
   "${validation_dir}/trivy-first.yaml")" = "${TRIVY_NODE_COLLECTOR_IMAGE}"
+test "$(yq eval-all '[select(.kind == "NetworkPolicy" and (.metadata.name == "restrict-kyverno" or .metadata.name == "restrict-trivy-operator")) | .spec.egress[].ports[]? | select(.protocol == "TCP" and .port == 6443)] | length' \
+  "${validation_dir}/resources-first.yaml")" = 2
 
 dashboard="$(yq eval-all --unwrapScalar 'select(.kind == "ConfigMap" and .metadata.name == "homelab-security-posture-dashboard") | .data."security-posture.json"' \
   "${validation_dir}/resources-first.yaml")"
 yq --input-format=json '.' <<<"${dashboard}" >/dev/null
+yq --input-format=json --output-format=yaml \
+  '{"groups": [{"name": "security.dashboard.promql", "rules": ([.. | select(tag == "!!map" and has("expr")) | .expr] | to_entries | map({"record": ("security_dashboard_query_" + (.key | tostring)), "expr": .value}))}]}' \
+  <<<"${dashboard}" >"${validation_dir}/security-dashboard-rules.yaml"
+promtool check rules "${validation_dir}/security-dashboard-rules.yaml" >/dev/null
+test "$(yq --input-format=json '[.. | select(tag == "!!map" and .type == "stat" and .fieldConfig.defaults.noValue != "Unknown")] | length' \
+  <<<"${dashboard}")" = 0
+test "$(yq --input-format=json '[.. | select(tag == "!!map" and (.type == "stat" or .type == "bargauge" or .type == "piechart") and (.description == null or .description == ""))] | length' \
+  <<<"${dashboard}")" = 0
 yq eval-all --output-format=yaml \
   '[.] | {"groups": [.[] | select(.kind == "PrometheusRule") | .spec.groups[]]}' \
   "${validation_dir}/resources-first.yaml" >"${validation_dir}/security-rules.yaml"

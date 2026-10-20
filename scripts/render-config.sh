@@ -20,6 +20,9 @@ export CONFIG_LONGHORN_DISK_PATH
 export CONFIG_PRIVATE_ROUTE_CIDR
 export CONFIG_NODE_INTERFACES
 export CONFIG_NODE_INTERFACE_PATTERN
+export CONFIG_NODE_1_ADDRESS
+export CONFIG_NODE_2_ADDRESS
+export CONFIG_NODE_3_ADDRESS
 export CONFIG_S3_ENDPOINT
 export CONFIG_S3_BUCKET
 export CNPG_POSTGRES_IMAGE
@@ -57,6 +60,9 @@ CONFIG_NODE_INTERFACE_PATTERN="$(
   yq --unwrapScalar '.spec.network.nodes | map(.interface) | unique | "^(" + join("|") + ")$"' \
     "${config_file}"
 )"
+CONFIG_NODE_1_ADDRESS="$(yq --unwrapScalar '.spec.network.nodes[0].address' "${config_file}")"
+CONFIG_NODE_2_ADDRESS="$(yq --unwrapScalar '.spec.network.nodes[1].address' "${config_file}")"
+CONFIG_NODE_3_ADDRESS="$(yq --unwrapScalar '.spec.network.nodes[2].address' "${config_file}")"
 CONFIG_CONTROL_PLANE_VIP="${CONFIG_CONTROL_PLANE_ENDPOINT_OVERRIDE:-${CONFIG_CONTROL_PLANE_VIP}}"
 if [[ -n "${CONFIG_NODE_INTERFACES_OVERRIDE:-}" ]]; then
   CONFIG_NODE_INTERFACES="${CONFIG_NODE_INTERFACES_OVERRIDE}"

@@ -10,6 +10,7 @@ disable-kube-proxy: true
 disable-network-policy: true
 secrets-encryption: true
 protect-kernel-defaults: true
+etcd-expose-metrics: true
 cluster-cidr: {{ homelab_spec.network.podCidr | to_json }}
 service-cidr: {{ homelab_spec.network.serviceCidr | to_json }}
 disable:

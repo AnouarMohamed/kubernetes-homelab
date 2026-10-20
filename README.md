@@ -64,7 +64,7 @@ The repository is written and passes offline validation.
 It has not run on my PCs yet.
 I track that work in [the status table](docs/status.md).
 
-[Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) ·
+[Live evidence](docs/evidence.md) · [Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) ·
 [Runbooks](docs/runbooks/README.md) · [DR drills](docs/dr/README.md)
 
 Licensed under the [MIT License](LICENSE).

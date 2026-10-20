@@ -38,6 +38,7 @@
           - rendered_k3s_config['disable-network-policy']
           - rendered_k3s_config['flannel-backend'] == 'none'
           - rendered_k3s_config['secrets-encryption']
+          - rendered_k3s_config['etcd-expose-metrics']
           - rendered_k3s_config['etcd-s3']
           - rendered_k3s_config['etcd-s3-region'] == homelab_s3_region
           - rendered_k3s_config['etcd-s3-retention'] == 28

@@ -152,12 +152,21 @@ test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.name == "all
   "${validation_dir}/resources-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.name == "allow-observability") | .spec.egress[].ports[]? | select(.protocol == "TCP" and .port == 10250)] | length' \
   "${validation_dir}/resources-first.yaml")" = 1
+for metrics_port in 2381 9962 9963 9964 9965 9966; do
+  test "$(METRICS_PORT="${metrics_port}" yq eval-all \
+    '[select(.kind == "NetworkPolicy" and .metadata.name == "allow-observability") | .spec.egress[].ports[]? | select(.protocol == "TCP" and .port == env(METRICS_PORT))] | length' \
+    "${validation_dir}/resources-first.yaml")" = 1
+done
 test "$(yq eval-all '[select(.kind == "Probe" and .metadata.name == "platform-health") | .spec.targets.staticConfig.static[] | select(. == "http://tempo.monitoring.svc:3200/ready")] | length' \
   "${validation_dir}/resources-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "Prometheus" and .spec.replicas == 2 and .spec.retention == "15d" and .spec.retentionSize == "18GB")] | length' \
   "${validation_dir}/prometheus-stack-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "Alertmanager" and .spec.replicas == 3)] | length' \
   "${validation_dir}/prometheus-stack-first.yaml")" = 1
+test "$(yq eval-all '[select(.kind == "Endpoints" and (.metadata.name | contains("kube-etcd"))) | .subsets[0].addresses[]] | length' \
+  "${validation_dir}/prometheus-stack-first.yaml")" = 3
+test "$(yq eval-all '[select(.kind == "ServiceMonitor" and .metadata.name == "openbao") | .spec.endpoints[] | select(.tlsConfig.serverName == "openbao.openbao.svc")] | length' \
+  "${validation_dir}/resources-first.yaml")" = 1
 grafana_ini="$(yq eval-all --unwrapScalar \
   'select(.kind == "ConfigMap" and .metadata.name == "monitoring-grafana") | .data["grafana.ini"]' \
   "${validation_dir}/prometheus-stack-first.yaml")"

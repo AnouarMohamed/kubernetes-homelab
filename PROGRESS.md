@@ -83,6 +83,12 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 | 2026-10-17 | promotion history reconciliation | GitLab's two generated image-lock promotion commits and the independent GitHub `HUMAN_TODO.md` deletion commit were preserved in merge commit `16ac1cf` without rewriting history. `make validate-sentinel security` passed afterward, including zero gitleaks findings across the 92 commits then present, and both remotes were advanced to the same history. |
 | 2026-10-20 | live Velero/CSI restore validation | Backup `dr-marker-proof-source-20261020` completed with 7/7 items, 1/1 CSI snapshots, and no backup warnings or errors. Restore `dr-marker-proof-restore-20261020` completed with 7/7 items and one non-fatal missing-original-PV warning while its CSI action dynamically provisioned a replacement. The restored PVC became Bound, the snapshot reported ready, and the source and restored file SHA-256 values both equaled `3f1881cde61e735dd781502f932968a36cde920813c7c55e48c4d1b2afc52c49`. The live API screenshot SHA-256 is `b9f7a9f713a26a125f37f3c767852a9689506943ab27dfdc01cd078c944b8690`. |
 | 2026-10-20 | GitHub status-history reconciliation | Three independent GitHub commits were preserved through merge commit `c1cf516`. Their blanket PC-tested status was not supported by recorded PC output, so the public status and bring-up checklist remain `not yet`; observed substitute-environment tests stay recorded as AWS evidence. |
+| 2026-10-20 | `make validate-storage` | Four pinned storage charts passed Helm lint; deterministic renders passed kubeconform and KubeLinter; the Longhorn and Velero monitoring ingress policies and repaired verification image pin passed repository assertions. |
+| 2026-10-20 | `make ansible-syntax ansible-templates`, `make validate-observability`, and `make validate-policy` | All three Ansible playbooks parsed; five template checks passed; seven observability and two policy charts linted; deterministic renders, kubeconform, KubeLinter, dashboard PromQL, ten Kyverno cases, and ten alert rules passed. |
+| 2026-10-20 | rolling `make aws-validation-bootstrap-nodes` | The first attempt was stopped after its SFTP transport remained stuck for almost one hour. With SSH keepalives added, the idempotent rerun completed serially with `unreachable=0` and `failed=0` on all hosts; each k3s configuration and service restart was the only node-specific change. All three nodes returned Ready. |
+| 2026-10-20 | live Prometheus target and etcd queries | All three Cilium agent and Envoy targets, all three Longhorn managers, and all three embedded etcd targets were up. `sum(etcd_server_has_leader)` returned 3 after the rolling activation of `etcd-expose-metrics`. |
+| 2026-10-20 | live Grafana evidence capture | Five 1920-by-1080 Grafana screenshots were captured and visually reviewed from the running AWS cluster. SHA-256: nodes `bee5d2e26af334d51274d43d27e7a03ecf4cd4dddbd904a55b3161a407ed1668`; etcd `4de785ac1b42efc92593605be67f79f7ecab134bd771e9172434bb3e0594bd4d`; Longhorn `776b115edf52ffbe5ad99f5f28a7c1f507f27302cf3f194bf2f48814e3136208`; PostgreSQL `2a2dd87490948f470529b30f943d825cc580f55da6f1bd748dd2b0dea56f9f33`; security `3575ca991efd015a619103546b5cf9f814010888a82cdb00a03f31f64cad8c51`. The images preserve observed memory pressure, stale backups, stale WAL archives, and vulnerability findings. |
+| 2026-10-20 | `make lint validate security` | The complete offline gate passed: Ansible lint's production profile reported zero failures and warnings; markdownlint reported zero issues; deterministic Helm and Kustomize renders, kubeconform, KubeLinter, Kyverno, promtool, Sentinel tests, package policy, and OpenTofu validation passed. Gitleaks found no repository-visible findings and no findings across all 99 commits then present. |
 
 ## Defects repaired during this work
 
@@ -92,6 +98,19 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 - Longhorn 1.12 robustness uses the `state` label. The earlier numeric comparison could
   miss degraded volumes; the alert and dashboards now query `degraded` and `faulted`
   label states.
+- The earlier drill-down dashboards were sparse, collided with two bundled dashboard
+  filenames, and included a Longhorn metric that does not exist. Purpose-specific
+  filenames, validated PromQL, incident-first posture cards, and focused trend panels
+  now cover nodes, etcd, Longhorn, CloudNativePG, and Trivy findings.
+- Embedded K3s etcd metrics default to loopback-only. The verified
+  `etcd-expose-metrics` configuration now exposes the client metrics endpoint, while
+  the firewall and monitoring policy allow only the required TCP/2381 path.
+- Longhorn and Velero metrics were selected by Prometheus but blocked by their
+  namespace policies. Narrow monitoring-namespace ingress rules now permit only the
+  documented metrics ports.
+- Cilium service translation presents the Kubernetes API backend on TCP/6443 to the
+  policy engine. Kyverno and Trivy now allow that exact backend port; this changed
+  Trivy from repeated API timeouts to a healthy operator with live findings.
 - Dashboard validation previously assumed each JSON value occupied one YAML line. It
   now accepts readable multiline JSON and syntax-checks every PromQL expression.
 - The k3s playbook now waits for the shared API endpoint from the initial server, which
@@ -199,11 +218,11 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 
 - The 44 Argo CD Applications exist in AWS, but the capacity-bounded evidence profile
   and placeholder runtime credentials mean the full tree is not yet Healthy.
-- Six live AWS screenshots cover the Argo CD tree, operations dashboard, Hubble flow
-  map, Sentinel status page, successful canary, and a completed Velero/CSI restore.
-  They intentionally retain the evidence profile's Argo drift, unavailable placeholder
-  public edge, and the restore's recorded non-fatal warning. Direct Longhorn and
-  CloudNativePG restore evidence remains pending the formal human-run drill.
+- Eleven live AWS screenshots cover the Argo CD tree, operations and component
+  dashboards, Hubble flow map, Sentinel status page, successful canary, security
+  posture, and a completed Velero/CSI restore. They intentionally retain observed
+  warnings and drift. Direct Longhorn and CloudNativePG restore evidence remains
+  pending the formal human-run drill.
 - kube-vip ARP and Cilium L2 announcement behavior cannot be proven in AWS and remain
   pending broadcast-capable hardware.
 - The seven-day telemetry storage-growth observation has not started.

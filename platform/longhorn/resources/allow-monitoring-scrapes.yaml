@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring-scrapes
+  namespace: longhorn-system
+  labels:
+    app.kubernetes.io/name: longhorn
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/part-of: storage
+spec:
+  podSelector:
+    matchLabels:
+      app: longhorn-manager
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9500

@@ -105,6 +105,7 @@ spec:
         format:
           - prometheus
       tlsConfig:
+        serverName: openbao.openbao.svc
         ca:
           secret:
             name: openbao-server-tls

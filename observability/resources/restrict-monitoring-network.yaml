@@ -68,3 +68,15 @@ spec:
           port: 9100
         - protocol: TCP
           port: 10250
+        - protocol: TCP
+          port: 2381
+        - protocol: TCP
+          port: 9962
+        - protocol: TCP
+          port: 9963
+        - protocol: TCP
+          port: 9964
+        - protocol: TCP
+          port: 9965
+        - protocol: TCP
+          port: 9966

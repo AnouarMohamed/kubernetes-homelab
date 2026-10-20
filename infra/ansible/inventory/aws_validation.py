@@ -82,7 +82,8 @@ def build_inventory() -> dict[str, object]:
             "ansible_user": "ubuntu",
             "ansible_ssh_common_args": (
                 f"-o {shlex.quote(proxy_command)} -o StrictHostKeyChecking=accept-new "
-                f"-o UserKnownHostsFile={shlex.quote(str(known_hosts))}"
+                f"-o UserKnownHostsFile={shlex.quote(str(known_hosts))} "
+                "-o ServerAliveInterval=15 -o ServerAliveCountMax=3"
             ),
             "ansible_ssh_private_key_file": private_key,
             "homelab_control_plane_endpoint": endpoint,

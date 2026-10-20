@@ -15,6 +15,12 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 
+kubeEtcd:
+  endpoints:
+    - ${CONFIG_NODE_1_ADDRESS}
+    - ${CONFIG_NODE_2_ADDRESS}
+    - ${CONFIG_NODE_3_ADDRESS}
+
 prometheusOperator:
   image:
     tag: v0.94.1
