@@ -5,7 +5,7 @@ configuration placeholders. I record only results I observe on the three PCs.
 
 ## Node provisioning: Nodes and k3s
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 ANSIBLE_CONFIG=infra/ansible/ansible.cfg \
@@ -26,7 +26,7 @@ listed. Before Cilium, `NotReady` because no CNI is expected.
 
 ## Cilium: Cilium
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 make bootstrap-cni
@@ -46,7 +46,7 @@ all three nodes.
 
 ## Argo CD: Argo CD
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 export SOPS_AGE_KEY_FILE=/secure/path/to/keys.txt
@@ -69,7 +69,7 @@ ConfigMap and record the observed reconciliation before marking self-heal verifi
 
 ## Edge traffic: Certificates, DNS, Tunnel, and WARP
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 tofu -chdir=infra/tofu plan -refresh=false
@@ -93,7 +93,7 @@ Delete or disable the temporary whoami route after capturing redacted evidence.
 
 ## Storage and backups: Storage and backups
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 kubectl get storageclass
@@ -116,7 +116,7 @@ measured recovery time remain unverified until that empty results table is fille
 
 ## Runtime secrets: Runtime secrets
 
-Status: **tested**
+Status: **not run yet**
 
 Follow `docs/runbooks/initialize-and-unseal-openbao.md`; never copy recovery values into
 the verification log. Then run only the non-secret status checks below.
@@ -148,7 +148,7 @@ rotation, revocation, and recovery remain unverified until I records those resul
 
 ## Observability: Observability
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 kubectl -n monitoring get pods,pvc -o wide
@@ -180,7 +180,7 @@ observations.
 
 ## Policy and supply chain: Policy and supply chain
 
-Status: **tested**
+Status: **not run yet**
 
 ```bash
 kubectl -n kyverno get deploy,pod,pdb,networkpolicy
@@ -215,7 +215,7 @@ completed. GitLab OIDC signature acceptance remains pending the Sentinel signed 
 
 ## Sentinel: Homelab Sentinel and delivery
 
-Status: **tested**
+Status: **not run yet**
 
 After the GitLab variables in `setup.md` are protected and populated, run a
 default-branch pipeline and retain links to every job. Verify that the image indexes

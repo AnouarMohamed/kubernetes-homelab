@@ -61,6 +61,7 @@ bring-up, work through [the setup list](docs/setup.md), then follow the
 ## State
 
 The repository is written and passes offline validation.
+It has not run on my PCs yet.
 I track that work in [the status table](docs/status.md).
 
 [Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) ·
