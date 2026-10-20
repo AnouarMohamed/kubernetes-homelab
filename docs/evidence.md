@@ -5,6 +5,10 @@ cluster. None is a mockup or generated image. AWS can exercise the Kubernetes,
 GitOps, delivery, storage, security, and observability paths, but it cannot prove
 kube-vip ARP or Cilium L2 announcements on the three physical PCs.
 
+The temporary AWS environment was destroyed on 2026-10-20 at my request. These are
+preserved historical captures, not live endpoints. [Architecture diagrams](diagrams/README.md)
+are maintained separately from screenshot evidence.
+
 ## Platform operations
 
 ### Fleet posture

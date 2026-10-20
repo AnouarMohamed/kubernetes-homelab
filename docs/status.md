@@ -1,5 +1,9 @@
 Everything here is written and passes `make validate`. None of it has run on the PCs yet. I update this table as I test each part.
 
+The temporary AWS substitute was destroyed on 2026-10-20 after evidence collection.
+See [observed results and remaining gaps](../PROGRESS.md) and the
+[historical screenshots](evidence.md); AWS tests do not count as tests on my PCs.
+
 | Component | Written | Tested on my PCs |
 | --- | --- | --- |
 | Repository controls and CI | yes | not yet |

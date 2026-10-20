@@ -1,9 +1,11 @@
-# Three-node k3s homelab
+# Kubernetes homelab
 
-This repository describes the k3s cluster I run on three x86-64 PCs. All three nodes
-run the control plane, embedded etcd, and workloads. Git holds the node setup, cluster
-resources, policy, and application delivery. Cloudflare Tunnel and WARP provide access,
-so I do not open inbound ports on the router.
+I designed this k3s cluster for three x86-64 PCs and validated it temporarily on AWS
+after the PCs became unavailable. The AWS lab is now destroyed; its real screenshots
+and test results remain here. Git holds node setup, cluster resources, policy, and
+delivery. The target design uses Cloudflare Tunnel and WARP without inbound router ports.
+
+[Editable Kubernetes homelab diagrams](docs/diagrams/README.md)
 
 ```mermaid
 flowchart LR
@@ -60,11 +62,9 @@ bring-up, work through [the setup list](docs/setup.md), then follow the
 
 ## State
 
-The repository is written and passes offline validation.
-It has not run on my PCs yet.
-I track that work in [the status table](docs/status.md).
+The repository passes offline validation. AWS results and remaining physical-PC
+checks are recorded in [the status table](docs/status.md).
 
-[Live evidence](docs/evidence.md) · [Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) ·
-[Runbooks](docs/runbooks/README.md) · [DR drills](docs/dr/README.md)
+[Evidence](docs/evidence.md) · [Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) · [Runbooks](docs/runbooks/README.md) · [DR drills](docs/dr/README.md)
 
 Licensed under the [MIT License](LICENSE).

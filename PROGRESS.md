@@ -5,16 +5,22 @@ the runbooks and verification checklist until it is observed.
 
 ## Current work
 
-Temporary AWS validation is active in `eu-west-1`. Three pinned
-`m7i-flex.large` instances, an internal API load balancer, and the versioned backup
-bucket are deployed with no security-group ingress from the Internet. The canonical
-repository architecture remains the three-PC k3s cluster; AWS is a short-lived
-substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
+The temporary AWS validation environment was destroyed on 2026-10-20 following an
+explicit user request. OpenTofu applied the reviewed delete-only plan: 27 resources
+destroyed, zero added or changed, and empty state afterward. Direct EC2 checks
+reported all three instances terminated, no tagged volumes, and no tagged VPCs.
+The versioned backup bucket and its data were deleted as part of teardown; these
+temporary backups cannot be recovered. Repository code and screenshots are retained.
+The original LAN design and the historical limitations below remain unchanged.
 
 ## Observed repository validation
 
 | Date | Command | Real output summary |
 | --- | --- | --- |
+| 2026-10-20 | Reviewed OpenTofu saved destroy plan; `tofu apply -input=false` | User-authorized temporary AWS teardown: 27 deleted, 0 added, 0 changed; state empty. Direct AWS queries: 3 terminated instances, 0 tagged volumes, 0 tagged VPCs, 0 lab load balancers. Tagging API still listed deleted EC2 resources; direct service queries were used for verification. |
+| 2026-10-20 | `node --check scripts/build-kubernetes-diagrams.mjs`; repeated generation and SHA-256 comparison | Eight editable Excalidraw scenes and eight SVG previews generated deterministically. All 17 generated files, including the index, matched on regeneration. |
+| 2026-10-20 | Playwright SVG rendering and Excalidraw file import | Eight SVG previews rendered without right-edge text overflow; scene structure and unique IDs checked. AWS diagram opened successfully in the actual Excalidraw browser editor and was visually inspected. |
+| 2026-10-20 | `make security` | Gitleaks scanned 100 commits and reported no leaks. No runtime credentials, plans, state or browser-test artifacts were added to Git. |
 | 2026-10-14 | `make ansible-templates` | Passed 5 tasks; both k3s and kube-vip templates parsed and all assertions passed. |
 | 2026-10-14 | `make ansible-syntax` | Parsed `site.yaml`, `upgrade.yaml`, and `reset.yaml` without syntax errors. |
 | 2026-10-14 | `make validate-observability` | Helm lint passed for 7 charts; kubeconform and kube-linter reported no invalid resources; promtool accepted 10 alert rules and all dashboard PromQL; deterministic rendering matched. |
@@ -216,8 +222,9 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 
 ## Not done
 
-- The 44 Argo CD Applications exist in AWS, but the capacity-bounded evidence profile
-  and placeholder runtime credentials mean the full tree is not yet Healthy.
+- At teardown, 44 Argo CD Applications had been created in AWS, but the
+  capacity-bounded evidence profile and placeholder runtime credentials meant the
+  full tree was not Healthy. Teardown does not turn this gap into a passed test.
 - Eleven live AWS screenshots cover the Argo CD tree, operations and component
   dashboards, Hubble flow map, Sentinel status page, successful canary, security
   posture, and a completed Velero/CSI restore. They intentionally retain observed
@@ -226,7 +233,7 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 - kube-vip ARP and Cilium L2 announcement behavior cannot be proven in AWS and remain
   pending broadcast-capable hardware.
 - The seven-day telemetry storage-growth observation has not started.
-- Three application database clusters retain operator-owned PVCs from failed replica
-  creation during the WAL outage. Active primaries are serving and all five fresh
-  backups completed, but deleting those PVCs is intentionally left to the documented
-  human storage-recovery boundary.
+- Before teardown, three application database clusters retained operator-owned PVCs
+  from failed replica creation during the WAL outage. Active primaries served and
+  five fresh backups completed; the replica-recovery drill was not completed before
+  the environment and its temporary backups were deleted.

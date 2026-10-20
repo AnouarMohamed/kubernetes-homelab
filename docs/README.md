@@ -3,6 +3,8 @@
 This directory holds the design, setup notes, runbooks, and recovery drills.
 
 - [Architecture and flows](architecture.md)
+- [Kubernetes homelab diagrams (Excalidraw)](diagrams/README.md)
+- [Authentic runtime screenshots](evidence.md)
 - [Component status](status.md)
 - [First bring-up setup](setup.md)
 - [Bring-up checklist](bring-up-checklist.md)

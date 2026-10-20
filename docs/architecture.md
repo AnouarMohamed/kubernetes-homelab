@@ -1,5 +1,9 @@
 # Architecture
 
+Explore the [Kubernetes homelab diagrams](diagrams/README.md) for editable service,
+network, AWS, delivery, recovery, observability, security, and application maps.
+These are design illustrations; [runtime evidence](evidence.md) is kept separately.
+
 The target is a three-server k3s cluster with embedded-etcd quorum. kube-vip owns the
 Kubernetes API virtual address. Cilium replaces kube-proxy, assigns LAN service
 addresses, implements Gateway API, and encrypts eligible cross-node traffic.
