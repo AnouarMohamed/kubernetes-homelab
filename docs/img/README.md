@@ -12,7 +12,7 @@ public addresses, tokens, usernames, and notification destinations before commit
 | `hubble-service-map.png` | Selected application traffic and policy verdicts | CAPTURED AWS 2026-10-16 |
 | `sentinel-status-page.png` | Public-safe selected service status | CAPTURED AWS 2026-10-16 |
 | `argo-rollouts-canary.png` | Canary steps, analysis, and stable revision | CAPTURED AWS 2026-10-16 |
-| `dr-restore-result.png` | Completed restore object plus source evidence | PENDING HUMAN DR DRILL |
+| `dr-restore-result.png` | Completed Velero restore object plus source backup | CAPTURED AWS 2026-10-20 |
 
 Before committing an image:
 

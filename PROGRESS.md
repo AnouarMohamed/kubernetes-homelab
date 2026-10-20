@@ -81,6 +81,7 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
 | 2026-10-16 | `make lint validate security` | The complete offline gate passed after the live fixes and evidence additions: lint, syntax checks, deterministic rendering, Helm/Kustomize validation, kubeconform, KubeLinter, Kyverno, promtool, Sentinel tests, package policy, OpenTofu, and secret scanning. Gitleaks found zero repository-visible findings and zero findings across all 89 commits then present. |
 | 2026-10-17 | GitLab pipeline `2956910729` | Every required job passed for commit `59e4e92`: lint, full repository validation, unit and integration tests, multi-architecture image builds, deployment packaging, SBOM, Trivy, full-history gitleaks, GitLab signing, staging and manually approved production digest promotion, GHCR mirroring, and GHCR signing. The temporary locked runner and its GitLab record and local credentials were removed after success. |
 | 2026-10-17 | promotion history reconciliation | GitLab's two generated image-lock promotion commits and the independent GitHub `HUMAN_TODO.md` deletion commit were preserved in merge commit `16ac1cf` without rewriting history. `make validate-sentinel security` passed afterward, including zero gitleaks findings across the 92 commits then present, and both remotes were advanced to the same history. |
+| 2026-10-20 | live Velero/CSI restore validation | Backup `dr-marker-proof-source-20261020` completed with 7/7 items, 1/1 CSI snapshots, and no backup warnings or errors. Restore `dr-marker-proof-restore-20261020` completed with 7/7 items and one non-fatal missing-original-PV warning while its CSI action dynamically provisioned a replacement. The restored PVC became Bound, the snapshot reported ready, and the source and restored file SHA-256 values both equaled `3f1881cde61e735dd781502f932968a36cde920813c7c55e48c4d1b2afc52c49`. The live API screenshot SHA-256 is `b9f7a9f713a26a125f37f3c767852a9689506943ab27dfdc01cd078c944b8690`. |
 
 ## Defects repaired during this work
 
@@ -189,15 +190,19 @@ substitute for tests that do not depend on LAN ARP or L2 broadcast behavior.
   S3 endpoint prevented archiving. WAL claims are now declared at 5 GiB, Longhorn
   permits bounded 125% logical allocation while retaining its 25% free-space floor,
   and the AWS evidence environment proved continuous archiving plus five new backups.
+- The storage reschedule verifier referenced a BusyBox digest that no longer resolved.
+  It now uses the registry-verified `1.37.0` multi-platform digest, and storage
+  validation asserts the exact tag-and-digest pair.
 
 ## Not done
 
 - The 44 Argo CD Applications exist in AWS, but the capacity-bounded evidence profile
   and placeholder runtime credentials mean the full tree is not yet Healthy.
-- Five live AWS screenshots cover the Argo CD tree, operations dashboard, Hubble flow
-  map, Sentinel status page, and successful canary. They intentionally retain the
-  evidence profile's Argo drift and unavailable placeholder public edge. The DR restore
-  screenshot remains pending the human-run destructive recovery drill.
+- Six live AWS screenshots cover the Argo CD tree, operations dashboard, Hubble flow
+  map, Sentinel status page, successful canary, and a completed Velero/CSI restore.
+  They intentionally retain the evidence profile's Argo drift, unavailable placeholder
+  public edge, and the restore's recorded non-fatal warning. Direct Longhorn and
+  CloudNativePG restore evidence remains pending the formal human-run drill.
 - kube-vip ARP and Cilium L2 announcement behavior cannot be proven in AWS and remain
   pending broadcast-capable hardware.
 - The seven-day telemetry storage-growth observation has not started.
