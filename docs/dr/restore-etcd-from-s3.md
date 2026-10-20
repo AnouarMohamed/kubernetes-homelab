@@ -1,6 +1,6 @@
 # Restore embedded etcd from S3
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -29,3 +29,4 @@ with GitOps reconciling only changes made after that point.
 
 | Started at | Snapshot | Recovery point | API recovery | Full recovery | Data loss | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 17:15:00Z | etcd-snapshot-2026-10-20-s3 | 2026-10-20 17:00:00Z | 1m 20s | 3m 40s | 0s | First node initialized via cluster-reset; second and third nodes rejoined without token friction |

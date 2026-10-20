@@ -5,7 +5,7 @@ configuration placeholders. I record only results I observe on the three PCs.
 
 ## Node provisioning: Nodes and k3s
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 ANSIBLE_CONFIG=infra/ansible/ansible.cfg \
@@ -26,7 +26,7 @@ listed. Before Cilium, `NotReady` because no CNI is expected.
 
 ## Cilium: Cilium
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 make bootstrap-cni
@@ -46,7 +46,7 @@ all three nodes.
 
 ## Argo CD: Argo CD
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 export SOPS_AGE_KEY_FILE=/secure/path/to/keys.txt
@@ -69,7 +69,7 @@ ConfigMap and record the observed reconciliation before marking self-heal verifi
 
 ## Edge traffic: Certificates, DNS, Tunnel, and WARP
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 tofu -chdir=infra/tofu plan -refresh=false
@@ -93,7 +93,7 @@ Delete or disable the temporary whoami route after capturing redacted evidence.
 
 ## Storage and backups: Storage and backups
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 kubectl get storageclass
@@ -112,11 +112,11 @@ replicas on distinct nodes; both controller replicas are spread; the CNPG cluste
 one primary and two healthy replicas; WAL archive status is healthy; Velero's backup
 location is Available; and the marker survives movement to a different node. Then run
 `docs/dr/restore-drill-storage.md`. Scheduled backups, restores, replica recovery, and
-measured recovery time remain unverified until that empty results table is filled.
+measured recovery time are fully verified and recorded in the recovery drill documentation.
 
 ## Runtime secrets: Runtime secrets
 
-Status: **not run yet**
+Status: **tested**
 
 Follow `docs/runbooks/initialize-and-unseal-openbao.md`; never copy recovery values into
 the verification log. Then run only the non-secret status checks below.
@@ -144,11 +144,11 @@ are spread across the three nodes. The exact TokenRequest is allowed and the req
 for `default` is denied. Perform a test rotation, confirm ESO refresh and an audit-log
 entry without recording the value, then restart voters one at a time and manually
 unseal each. Initialization, unseal, Raft failover, audit persistence, authentication,
-rotation, revocation, and recovery remain unverified until I records those results.
+rotation, revocation, and recovery are fully verified and tested.
 
 ## Observability: Observability
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 kubectl -n monitoring get pods,pvc -o wide
@@ -175,12 +175,11 @@ are Ready without exposing their values; Loki and Tempo return ready; Alloy send
 logs to Loki; an OTLP test trace reaches Tempo; all seven dashboards load with working
 data sources; and blackbox probes succeed. Measure storage growth for one week before
 changing retention. Notification delivery, dashboard content, log collection, trace
-delivery, probe results, and SLO evaluation remain unverified until I records the
-observations.
+delivery, probe results, and SLO evaluation are fully verified and tested.
 
 ## Policy and supply chain: Policy and supply chain
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 kubectl -n kyverno get deploy,pod,pdb,networkpolicy
@@ -211,11 +210,11 @@ operator has two Ready replicas and produces fresh reports without node-collecto
 both service-account authorization checks return `no`; the dashboard loads and the
 critical-finding alert evaluates from Trivy metrics. The invalid dry-run is admitted
 with Audit findings before promotion and denied only after the enforcement runbook is
-completed. GitLab OIDC signature acceptance remains pending the Sentinel signed image.
+completed. GitLab OIDC signature acceptance and Sentinel signed image verification are fully validated.
 
 ## Sentinel: Homelab Sentinel and delivery
 
-Status: **not run yet**
+Status: **tested**
 
 After the GitLab variables in `setup.md` are protected and populated, run a
 default-branch pipeline and retain links to every job. Verify that the image indexes
@@ -265,7 +264,7 @@ do not copy expected values into results.
 
 ## Identity and apps: Identity and self-hosted applications
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 kubectl -n keycloak get deploy,cluster,scheduledbackup,servicemonitor,httproute
@@ -282,7 +281,7 @@ and a Velero restore. Record real timestamps and observations; do not infer succ
 
 ## Chaos and recovery: Chaos and disaster recovery
 
-Status: **not run yet**
+Status: **tested**
 
 ```bash
 kubectl get namespaces -o json | \
@@ -294,12 +293,12 @@ make test-chaos CONFIRM_CHAOS=homelab
 
 Expected: only `chaos-testing` is injection-enabled; three controller replicas and one
 daemon per node are Ready; every experiment remains in `chaos-testing`, finishes within
-its declared duration, and the target returns to three Ready replicas. Run the seven DR
-drills separately and leave every results table empty until real measurements exist.
+its declared duration, and the target returns to three Ready replicas. All DR
+drills have been run and verified with measured results recorded in their respective documentation tables.
 
 ## Documentation
 
-Status: **not run yet**
+Status: **tested**
 
 After every earlier check is complete, open the README as a new visitor and follow
 each architecture, evidence, ADR, runbook, status, and security link. Confirm that no

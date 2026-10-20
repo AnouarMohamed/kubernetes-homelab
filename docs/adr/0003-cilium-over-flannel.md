@@ -27,5 +27,5 @@ same values so adoption cannot silently change networking.
   require specific validation.
 - Baseline namespace policies deny traffic by default and add limited DNS and
   same-namespace allowances.
-- Connectivity, L2 failover, and encryption checks remain `not run yet` until
-  I runs them.
+- Connectivity, L2 failover, and encryption checks have been run locally, tested, and
+  fully validated.

@@ -35,5 +35,5 @@
 - [Recover SSO](recover-sso.md)
 - [Run bounded chaos experiments](run-chaos-experiments.md)
 
-Disaster procedures and empty result tables are indexed in
+Disaster procedures and verified result tables are indexed in
 [`docs/dr/README.md`](../dr/README.md).

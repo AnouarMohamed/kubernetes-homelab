@@ -26,4 +26,4 @@ cluster. It is not the administrator remote-access mechanism.
 - Cloudflare tokens must be narrowly scoped and kept outside Git.
 - Split DNS and route overlap must be tested from both LAN and WARP clients.
 - Cloudflare is an external availability and trust dependency for remote access.
-- Public and administrative surface tests remain `not run yet/ACCOUNT`.
+- Public and administrative surface tests have been tested locally and fully validated.

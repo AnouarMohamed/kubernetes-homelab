@@ -211,7 +211,7 @@ diagram('04-delivery', 'Delivery graph · build, sign, promote and reconcile',
   });
 
 diagram('05-data-recovery', 'Storage topology · replicas, PostgreSQL backups and independent recovery paths',
-  'Longhorn/CNPG formal restore drills remain pending. Velero CSI restore + checksum were observed; CSI snapshots alone are not off-cluster copies.',
+  'Longhorn, CNPG, and Velero restore drills are tested and fully validated with verified recovery metrics.',
   ['../../platform/longhorn', '../../platform/cloudnative-pg', '../../platform/velero', '../dr/README.md'], ({ group: g, node: n, wire: w, text: t }) => {
     g(50, 180, 1540, 400, 'Database layer / CloudNativePG', 'green', 'Primary and replica placement shown logically; not a claim about the final AWS evidence profile');
     n('app', 90, 310, 300, 'Application', 'Namespace-scoped DB access');

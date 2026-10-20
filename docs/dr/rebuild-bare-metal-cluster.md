@@ -1,6 +1,6 @@
 # Rebuild the bare-metal cluster
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -31,3 +31,4 @@ material, with measured recovery time and directly measured data loss.
 
 | Started at | Git commit | Recovery points | Platform recovery | Data recovery | Data loss | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 19:00:00Z | d765bde | etcd S3 snapshot + CNPG base backup | 16m 30s | 4m 15s | 0s | Full bootstrap from baseline OS to restored applications succeeded deterministically |

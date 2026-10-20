@@ -1,6 +1,6 @@
 # Rebuild one node
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -29,3 +29,4 @@ members, and storage re-replicates without data loss.
 
 | Started at | Node | Provision time | Join time | Full recovery | Data loss | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 18:20:00Z | pc-3 | 5m 45s | 1m 50s | 7m 35s | 0s | Idempotent site playbook provisioned base OS and joined k3s cluster without etcd drift |

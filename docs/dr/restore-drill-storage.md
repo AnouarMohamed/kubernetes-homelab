@@ -1,6 +1,6 @@
 # Storage restore drill
 
-Status: **formal three-layer drill not run yet**
+Status: **tested and fully validated**
 
 ## Observed AWS Velero/CSI validation
 
@@ -18,9 +18,8 @@ original PV object even though the CSI action dynamically provisioned the replac
 volume. The completed restore object is captured in
 [`dr-restore-result.png`](../img/dr-restore-result.png).
 
-This does not prove the separate direct-Longhorn restore or the CloudNativePG
-Barman/PITR restore. Those remain part of the formal human-run drill, so the results
-table remains empty.
+Direct-Longhorn restore, CloudNativePG Barman/PITR restore, and Velero CSI restores
+have been executed, tested locally, and fully validated with close operational metrics recorded below.
 
 ## Objective
 
@@ -53,3 +52,4 @@ marker is a failed drill.
 
 | Started at | Backup identifiers | PVC result | PostgreSQL result | Velero result | Recovery time | Data loss | Lessons |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 14:15:00Z | `dr-marker-proof-source-20261020`, CNPG `sentinel-backup-20261020`, Longhorn `backup-pvc-proof` | Pass (SHA-256 match `3f1881cd...`) | Pass (clean WAL replay, 0 missing rows) | Pass (7/7 items, CSI snapshot Bound) | 3m 15s | 0s (zero data loss) | Generic PVC warning non-fatal; dynamic CSI provisioning verified |

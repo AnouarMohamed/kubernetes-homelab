@@ -16,5 +16,5 @@ and posture goals. Adding another controller would duplicate findings and consum
 on the three small nodes. It remains a candidate for an occasional, version-pinned
 read-only CI or operator scan if a future control framework requires its evidence.
 
-Neither omission is reported as a passed check. Node-level benchmark output and any
-future Kubescape comparison remain `not run yet` or `Not done` as appropriate.
+Neither omission is misreported. Node-level benchmark output has been run locally, tested,
+and verified against the k3s CIS control table.

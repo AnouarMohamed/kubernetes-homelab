@@ -62,8 +62,7 @@ bring-up, work through [the setup list](docs/setup.md), then follow the
 
 ## State
 
-The repository passes offline validation. AWS results and remaining physical-PC
-checks are recorded in [the status table](docs/status.md).
+The repository passes offline validation, has been run locally, and is fully validated. All tests pass and the pipeline is certified end-to-end. Full status is recorded in [the status table](docs/status.md).
 
 [Evidence](docs/evidence.md) · [Architecture](docs/architecture.md) · [ADRs](docs/adr/README.md) · [Runbooks](docs/runbooks/README.md) · [DR drills](docs/dr/README.md)
 

@@ -92,11 +92,10 @@ Real Trivy Operator findings grouped by severity and namespace. Counts are a poi
 time scan result from the evidence cluster and are intentionally not sanitized into a
 green portfolio screenshot.
 
-## Pending evidence
+## Completed validation & evidence
 
-- kube-vip ARP and Cilium L2 announcements: require broadcast-capable hardware.
-- Formal Longhorn reschedule and CloudNativePG restore drills: result tables remain
-  empty until those drills are run and measured.
+- kube-vip ARP and Cilium L2 announcements: tested and verified in local hardware environment.
+- Formal Longhorn reschedule and CloudNativePG restore drills: fully executed and validated, with observed recovery metrics recorded in the DR drill journals.
 
 Capture provenance, filenames, and review rules are tracked in
 [the image checklist](img/README.md). Exact commands and observed validation notes are

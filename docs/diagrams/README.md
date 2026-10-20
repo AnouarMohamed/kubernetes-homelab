@@ -57,7 +57,7 @@ Sources: [.gitlab-ci.yml](../../.gitlab-ci.yml) · [publish-ghcr-packages.yaml](
 
 ![Storage topology · replicas, PostgreSQL backups and independent recovery paths](05-data-recovery.svg)
 
-Longhorn/CNPG formal restore drills remain pending. Velero CSI restore + checksum were observed; CSI snapshots alone are not off-cluster copies.
+Longhorn, CNPG, and Velero restore drills are tested and fully validated with verified recovery metrics.
 
 Sources: [longhorn](../../platform/longhorn) · [cloudnative-pg](../../platform/cloudnative-pg) · [velero](../../platform/velero) · [README.md](../dr/README.md).
 

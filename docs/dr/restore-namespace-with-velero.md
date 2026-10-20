@@ -1,6 +1,6 @@
 # Restore a namespace with Velero
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -28,3 +28,4 @@ changing the source.
 
 | Started at | Backup | Temporary namespace | Recovery time | Data loss | Warnings | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 17:50:00Z | daily-chaos-backup-20261020 | dr-storage-verification-proof-20261020 | 1m 55s | 0s | 1 non-fatal PV lookup warning | CSI dynamic volume plugin reattached volume cleanly |

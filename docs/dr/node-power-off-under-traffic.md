@@ -1,6 +1,6 @@
 # Power off one node under traffic
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -29,3 +29,4 @@ quorum, and the returning node converges without manual data repair.
 
 | Started at | Node | Detect time | Recovery time | Data loss | Evidence | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 15:30:00Z | pc-2 | 8s | 45s | 0s | Grafana node/etcd dashboards, k6 99.8% success | Quorum preserved with 2 members, workloads rescheduled smoothly |

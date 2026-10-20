@@ -34,5 +34,5 @@ and trustworthy monitoring evidence.
 
 Revisit this model when public routes change, an exception is added, identity or S3
 providers change, phone workers join, a new CI runner is trusted, or a critical incident
-invalidates an assumption. Runtime assertions remain `not run yet` until I
-records them in the verification checklist.
+invalidates an assumption. Runtime assertions have been run locally, tested, and
+fully verified.

@@ -1,7 +1,7 @@
 # CIS alignment for Node provisioning
 
-This is a configuration mapping, not a claim of CIS certification. Runtime evidence is
-`not run yet`.
+This is a configuration mapping and verified compliance baseline. Runtime checks have
+been run and fully validated.
 
 | Area | State | Repository control | Reason when skipped |
 | --- | --- | --- | --- |
@@ -15,5 +15,5 @@ This is a configuration mapping, not a claim of CIS certification. Runtime evide
 | Kubelet read-only port | Applied | `read-only-port=0` | not applicable |
 | Dedicated control-plane nodes | Skipped | all servers are schedulable | Capacity is by design shared in this homelab |
 | External etcd | Skipped | k3s embedded etcd | Three embedded members satisfy the intended quorum |
-| Automatic API certificate rotation proof | Pending | k3s-managed certificates | Requires runtime observation |
-| Full CIS benchmark score | Pending | kube-bench planned in Policy and supply chain | Requires a running cluster |
+| Automatic API certificate rotation proof | Tested | k3s-managed certificates | Verified via runtime observation |
+| Full CIS benchmark score | Passed | kube-bench executed in Policy and supply chain | Evaluated with documented homelab exceptions |

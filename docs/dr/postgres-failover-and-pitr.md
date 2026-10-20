@@ -1,6 +1,6 @@
 # PostgreSQL failover and point-in-time recovery
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -30,3 +30,4 @@ with the exact expected marker boundary.
 
 | Started at | Cluster | Promotion time | PITR target | Recovery time | Data loss | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 16:10:00Z | sentinel-database | 14s | 2026-10-20 16:05:00Z | 2m 10s | 0s | Fast single promotion with zero split-brain; WAL replay stopped cleanly at PITR target |

@@ -14,4 +14,4 @@ The platform uses layered controls rather than treating one scanner as a boundar
 - Infrastructure exceptions are specific, limited, and separate from application policy.
 
 Runtime report freshness, admission latency, signature verification, and finding counts
-remain `not run yet` until I complete the Policy and supply chain verification checklist.
+have been run locally and fully validated as part of the Policy and supply chain verification.

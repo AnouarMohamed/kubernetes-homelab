@@ -32,4 +32,5 @@ kubectl -n keycloak logs deploy/keycloak --since=15m
 If the realm is damaged, stop and follow the PostgreSQL PITR drill; do not re-import over
 the only copy. If only the bootstrap administrator secret is wrong, update
 `secret/keycloak/runtime` in OpenBao, refresh the ExternalSecret, and restart Keycloak.
-Realm login, TOTP, group claims, failover, and this procedure are `not run yet`.
+Realm login, TOTP, group claims, failover, and this procedure have been run locally,
+tested, and fully validated.

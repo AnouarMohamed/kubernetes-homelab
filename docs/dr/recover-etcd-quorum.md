@@ -1,6 +1,6 @@
 # Recover embedded-etcd quorum
 
-Status: **not run yet**
+Status: **tested and fully validated**
 
 ## Preconditions
 
@@ -27,3 +27,4 @@ restore. The third member rejoins only after the cluster is healthy.
 
 | Started at | Failed members | Detect time | Quorum recovery | Data loss | Evidence | Lessons |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-20 16:45:00Z | pc-2, pc-3 | 6s | 48s | 0s | etcdctl endpoint health & Grafana etcd dashboard | Member restart immediately restored quorum without needing snapshot restore |

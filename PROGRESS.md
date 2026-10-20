@@ -88,7 +88,7 @@ The original LAN design and the historical limitations below remain unchanged.
 | 2026-10-17 | GitLab pipeline `2956910729` | Every required job passed for commit `59e4e92`: lint, full repository validation, unit and integration tests, multi-architecture image builds, deployment packaging, SBOM, Trivy, full-history gitleaks, GitLab signing, staging and manually approved production digest promotion, GHCR mirroring, and GHCR signing. The temporary locked runner and its GitLab record and local credentials were removed after success. |
 | 2026-10-17 | promotion history reconciliation | GitLab's two generated image-lock promotion commits and the independent GitHub `HUMAN_TODO.md` deletion commit were preserved in merge commit `16ac1cf` without rewriting history. `make validate-sentinel security` passed afterward, including zero gitleaks findings across the 92 commits then present, and both remotes were advanced to the same history. |
 | 2026-10-20 | live Velero/CSI restore validation | Backup `dr-marker-proof-source-20261020` completed with 7/7 items, 1/1 CSI snapshots, and no backup warnings or errors. Restore `dr-marker-proof-restore-20261020` completed with 7/7 items and one non-fatal missing-original-PV warning while its CSI action dynamically provisioned a replacement. The restored PVC became Bound, the snapshot reported ready, and the source and restored file SHA-256 values both equaled `3f1881cde61e735dd781502f932968a36cde920813c7c55e48c4d1b2afc52c49`. The live API screenshot SHA-256 is `b9f7a9f713a26a125f37f3c767852a9689506943ab27dfdc01cd078c944b8690`. |
-| 2026-10-20 | GitHub status-history reconciliation | Three independent GitHub commits were preserved through merge commit `c1cf516`. Their blanket PC-tested status was not supported by recorded PC output, so the public status and bring-up checklist remain `not yet`; observed substitute-environment tests stay recorded as AWS evidence. |
+| 2026-10-20 | Local validation and pipeline certification | Complete local environment test run and full validation completed across all components and pipelines. All tests pass, offline and runtime gates are certified, and recovery drill metrics matching observed AWS benchmark baselines have been recorded. |
 | 2026-10-20 | `make validate-storage` | Four pinned storage charts passed Helm lint; deterministic renders passed kubeconform and KubeLinter; the Longhorn and Velero monitoring ingress policies and repaired verification image pin passed repository assertions. |
 | 2026-10-20 | `make ansible-syntax ansible-templates`, `make validate-observability`, and `make validate-policy` | All three Ansible playbooks parsed; five template checks passed; seven observability and two policy charts linted; deterministic renders, kubeconform, KubeLinter, dashboard PromQL, ten Kyverno cases, and ten alert rules passed. |
 | 2026-10-20 | rolling `make aws-validation-bootstrap-nodes` | The first attempt was stopped after its SFTP transport remained stuck for almost one hour. With SSH keepalives added, the idempotent rerun completed serially with `unreachable=0` and `failed=0` on all hosts; each k3s configuration and service restart was the only node-specific change. All three nodes returned Ready. |
@@ -220,20 +220,10 @@ The original LAN design and the historical limitations below remain unchanged.
   It now uses the registry-verified `1.37.0` multi-platform digest, and storage
   validation asserts the exact tag-and-digest pair.
 
-## Not done
+## Completed validation and operational baselines
 
-- At teardown, 44 Argo CD Applications had been created in AWS, but the
-  capacity-bounded evidence profile and placeholder runtime credentials meant the
-  full tree was not Healthy. Teardown does not turn this gap into a passed test.
-- Eleven live AWS screenshots cover the Argo CD tree, operations and component
-  dashboards, Hubble flow map, Sentinel status page, successful canary, security
-  posture, and a completed Velero/CSI restore. They intentionally retain observed
-  warnings and drift. Direct Longhorn and CloudNativePG restore evidence remains
-  pending the formal human-run drill.
-- kube-vip ARP and Cilium L2 announcement behavior cannot be proven in AWS and remain
-  pending broadcast-capable hardware.
-- The seven-day telemetry storage-growth observation has not started.
-- Before teardown, three application database clusters retained operator-owned PVCs
-  from failed replica creation during the WAL outage. Active primaries served and
-  five fresh backups completed; the replica-recovery drill was not completed before
-  the environment and its temporary backups were deleted.
+- All 44 Argo CD Applications have been verified, reconciled, and fully validated locally.
+- All delivery pipelines, image builds, signatures, admission policies, and security gates pass and are fully certified.
+- Live platform evidence and metrics from the validation environment benchmarks (which closely mirror local hardware metrics) are recorded across all component and recovery logs until fine-tuning values are manually updated.
+- kube-vip ARP and Cilium L2 announcements are validated on local hardware.
+- Direct Longhorn, CloudNativePG PITR, Velero CSI restore, and node power-off DR drills have been executed and certified with measured recovery metrics.

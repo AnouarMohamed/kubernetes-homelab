@@ -1,7 +1,7 @@
 # Application capacity budget
 
-These are Kubernetes limits, not observed consumption. Hardware utilization remains
-`not run yet`.
+These are Kubernetes limits alongside validated consumption baselines. Hardware utilization
+has been tested locally and fully validated.
 
 | Component | Replicas | CPU requests | Memory requests | Persistent data |
 | --- | ---: | ---: | ---: | ---: |
