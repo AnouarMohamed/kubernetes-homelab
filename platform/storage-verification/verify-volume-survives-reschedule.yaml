@@ -47,7 +47,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: marker
-          image: docker.io/library/busybox@sha256:d82f458899c9696cb26a7c02d5568f81c8c8223f8661bb2edeb06ee7adf3a156
+          image: docker.io/library/busybox:1.37.0@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e
           command:
             - /bin/sh
             - -ec

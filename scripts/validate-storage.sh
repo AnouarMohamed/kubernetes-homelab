@@ -115,6 +115,8 @@ test "$(yq eval-all '[select(.kind == "RecurringJob")] | length' \
   "${validation_dir}/longhorn-first.yaml")" = 2
 test "$(yq eval-all '[select(.kind == "Cluster" and .metadata.name == "storage-verification" and .spec.instances == 3)] | length' \
   "${validation_dir}/cloudnative-pg-first.yaml")" = 1
+test "$(yq eval-all '[select(.kind == "Deployment" and .metadata.name == "storage-reschedule-verification") | .spec.template.spec.containers[] | select(.name == "marker" and .image == "docker.io/library/busybox:1.37.0@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e")] | length' \
+  "${validation_dir}/storage-verification-first.yaml")" = 1
 test "$(yq eval-all '[select(.kind == "Schedule")] | length' \
   "${validation_dir}/velero-first.yaml")" = 2
 test "$(yq eval-all '[select(.kind == "NetworkPolicy" and .metadata.namespace == "cnpg-system")] | length' \
