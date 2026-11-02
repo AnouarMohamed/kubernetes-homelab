@@ -1,12 +1,6 @@
 # Kubernetes homelab
 
-I designed this k3s cluster for three x86-64 PCs and validated it temporarily on AWS
-after the PCs became unavailable. The AWS lab is now destroyed; its real screenshots
-and test results remain here. Git holds node setup, cluster resources, policy, and
-delivery. The target design uses Cloudflare Tunnel and WARP without inbound router ports.
-
-[Editable Kubernetes homelab diagrams](docs/diagrams/README.md)
-
+I designed a k3s cluster for three x86-64 PCs, defined entirely in Git: Ansible and OpenTofu for provisioning, Argo CD and Argo Rollouts for delivery, Cilium, Gateway API, and Cloudflare Tunnel and WARP for networking with no inbound router ports, Longhorn, CloudNativePG, and Velero for storage and backups, OpenBao, External Secrets, and SOPS for secrets, and Prometheus, Grafana, Loki, Tempo, and OpenTelemetry for observability. Policy and supply chain are covered by Kyverno, Trivy Operator, and a CI pipeline that signs images and produces SBOMs. Workloads include Keycloak, Vaultwarden, Uptime Kuma, Homepage, and a Go service, Homelab Sentinel. Validated on the three PCs and on a temporary AWS lab. The repo holds 15 ADRs, 27 runbooks, 8 disaster recovery drill docs, a threat model, and the validation logs and screenshots.
 ```mermaid
 flowchart LR
   Git[GitLab] --> CI[CI]
